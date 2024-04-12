@@ -2,6 +2,10 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import Sidebar from "../components/Sidebar";
+import { AppRouterCacheProvider } from "@mui/material-nextjs/v13-appRouter";
+import { ThemeProvider } from "@mui/material/styles";
+import theme from "@/theme";
+import { Providers } from "@/redux/provider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -16,15 +20,21 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang='en' suppressHydrationWarning={true}>
-      <body className={inter.className}>
-        <div className='w-[100vw] h-[100vh] overflow-hidden flex border border-red-500'>
-          <div className='w-[30%] border'>
-            <Sidebar />
-          </div>
-          <div className='w-[70%]'>{children}</div>
-        </div>
-      </body>
-    </html>
+    <Providers>
+      <html lang='en' suppressHydrationWarning={true}>
+        <body className={inter.className}>
+          <AppRouterCacheProvider>
+            <ThemeProvider theme={theme}>
+              <div className='w-[100vw] h-[100vh] overflow-hidden flex bg-[#ffffff] text-[#00000085]'>
+                <div className='w-[23%] border-r-2 border-r-[#8080809a]'>
+                  <Sidebar />
+                </div>
+                <div className='w-[77%]'>{children}</div>
+              </div>
+            </ThemeProvider>
+          </AppRouterCacheProvider>
+        </body>
+      </html>
+    </Providers>
   );
 }
