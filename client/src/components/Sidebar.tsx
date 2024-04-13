@@ -6,11 +6,18 @@ import React from "react";
 import { IoHomeSharp } from "react-icons/io5";
 import { BsClockFill } from "react-icons/bs";
 import { FaUserCircle } from "react-icons/fa";
+import { useAppDispatch, useAppSelector } from "@/redux/hook";
+import { Avatar } from "@mui/material";
+import { deepOrange, red } from "@mui/material/colors";
+import { clearUser } from "@/redux/slices/userSlice";
 
 type Props = {};
 
 function Sidebar({}: Props) {
+  const user = useAppSelector((state)=>state.user)
+  const dispatch = useAppDispatch()
   const pathName = usePathname();
+  console.log(user)
   return (
     <div className='px-[14%] py-6 flex justify-between flex-col h-[100%]'>
       <div>
@@ -52,13 +59,13 @@ function Sidebar({}: Props) {
             }
             className='h-[48px] w-[100%] flex items-center px-5 mt-7 cursor-pointer gap-3 text-[16px]'>
             <BsClockFill size={23} />
-            WatchList
+            Watchlist
           </div>
         </Link>
       </div>
 
       <div>
-        <Link href='/auth/login'>
+        {user.email.length==0 ? <Link href='/auth/login'>
           <div
             style={
               pathName.includes("/auth")
@@ -72,7 +79,26 @@ function Sidebar({}: Props) {
             <FaUserCircle size={23} />
             Login
           </div>
-        </Link>
+        </Link> :
+          <div onClick={()=>dispatch(clearUser())}
+            style={
+              pathName.includes("/auth")
+                ? { backgroundColor: colors.red, color: "white" }
+                : {
+                    backgroundColor: "transparent",
+                    border: "2px solid #8080809a",
+                  }
+            }
+            className='h-[48px] w-[100%] flex items-center px-5 mt-7 cursor-pointer gap-3 text-[16px] rounded-[5px]'>
+            <Avatar
+              sx={{ bgcolor: red[500], color: "white", height: 30, width: 30 }}
+              alt="Remy Sharp"
+            >
+              {user.email[0].toUpperCase()}
+            </Avatar>
+            Logout
+          </div>}
+        
       </div>
     </div>
   );

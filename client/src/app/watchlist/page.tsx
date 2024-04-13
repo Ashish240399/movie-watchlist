@@ -3,10 +3,10 @@ import WatchListPage from "./WatchListPage";
 
 type Props = {};
 
-const WatchList = (props: Props) => {
+const watchList = (props: Props) => {
   return <div>
     <WatchListPage/>
   </div>;
 };
 
-export default WatchList;
+export default watchList;

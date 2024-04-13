@@ -1,27 +1,28 @@
 "use client"
-import MovieCard from '@/components/MovieCard';
-import SearchBar from '@/components/SearchBar';
-import { getMoviewByTitle } from '@/services/getMovieByTitle';
-import { Button } from '@mui/material';
+import WatchListCard from '@/components/WatchListCard'
+import { colors } from '@/constants/Color'
+import { useAppSelector } from '@/redux/hook'
 import React, { useEffect, useState } from 'react'
 
 type Props = {}
 
 const WatchListPage = (props: Props) => {
-    const [movieTitle, setMovieTitle] = useState<string>("");
-    const [movieList,setMovieList] = useState<Movie | null>(null)
-    async function getMovieByTitleFn(){
-        const response = await getMoviewByTitle(movieTitle);
-        setMovieList(response)
-    }
-    console.log(movieList)
+  const user = useAppSelector((state)=>state.user) 
+    console.log(user)
   return (
     <div>
-        <SearchBar action={setMovieTitle}/>
-        <Button onClick={getMovieByTitleFn} variant='contained'>Search</Button>
-        <div>
-          {movieList && <MovieCard movie={movieList} />}
-        </div>
+      <div className='mb-[30px]'>
+        <p className='text-[40px]'>Welcome to <span style={{
+          color:colors.red,
+        }}>Watchlists</span></p>
+      </div>
+      <div className='grid grid-cols-4 gap-4'>
+          {user.watchList.map((movie:Movie,id:number)=>(
+            <div key={id}>
+              <WatchListCard movie={movie} />
+            </div>
+          ))}
+      </div>
     </div>
   )
 }

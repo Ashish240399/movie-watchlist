@@ -29,7 +29,7 @@ export default function RootLayout({
                 <div className='w-[23%] border-r-2 border-r-[#8080809a]'>
                   <Sidebar />
                 </div>
-                <div className='w-[77%] px-[8%] py-6'>{children}</div>
+                <div className='w-[77%] px-[8%] py-6 overflow-auto'>{children}</div>
               </div>
             </ThemeProvider>
           </AppRouterCacheProvider>

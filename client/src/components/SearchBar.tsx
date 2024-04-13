@@ -1,5 +1,6 @@
-import { TextField } from '@mui/material'
+import { InputAdornment, TextField } from '@mui/material'
 import React from 'react'
+import SearchIcon from '@mui/icons-material/Search';
 
 type Props = {
     action:Function
@@ -7,9 +8,24 @@ type Props = {
 
 const SearchBar = ({action}: Props) => {
   return (
-        <TextField sx={{
-            width:"90%"
-        }} id="search" label="Search Movie Title" variant="outlined" size='small' onChange={(e)=>action(e.target.value)} />
+        <TextField
+          sx={{ width: "100%" }}
+          id="search"
+          label="Search Movie Title"
+          variant="outlined"
+          size="small"
+          onChange={(e) => action(e.target.value)}
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <SearchIcon />
+              </InputAdornment>
+            ),
+          }}
+          InputLabelProps={{
+            shrink: true,
+          }}
+        />
         
   )
 }

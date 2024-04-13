@@ -4,6 +4,7 @@ import fs from 'fs';
 export const POST = async(req:Request,res:Response) => {
     const body: any = await req.json();
     const email = body.email;
+    const movie:Movie = body.movie
     if (email) {
 
       const usersFilePath = path.resolve(process.cwd(), "./src/data/userData.json");
@@ -19,20 +20,23 @@ export const POST = async(req:Request,res:Response) => {
 
       if (users[email]) {
         // The user already exists
-          return Response.json({message:"User already exists"}, {
-            status: 409
-          })
-      } else {
-        // The user doesn't exist, so create a new user
-        const newUser = { email: email, watchList: [] };
-        users[email] = newUser;
-
-        // Write the updated users object back to the JSON file
+        if (users[email].watchList.some((obj:Movie)=>obj.Title===movie.Title)) {
+            users[email].watchList = users[email].watchList.filter((obj:Movie)=>obj.Title!==movie.Title)
+        }
+        else{
+            users[email].watchList.push(body.movie)
+            
+        }
         await fs.promises.writeFile(usersFilePath, JSON.stringify(users, null, 2));
-
-        return Response.json(newUser, {
+        return Response.json(users[email], {
             status: 200
         })
+        
+      } else {
+        return Response.json({message:"User does not exist"}, {
+            status: 404
+        })
+        
       }
     } else {
         // Handle the case where req.body is null
@@ -40,4 +44,5 @@ export const POST = async(req:Request,res:Response) => {
             status: 400
         })
     }
+    
 }
