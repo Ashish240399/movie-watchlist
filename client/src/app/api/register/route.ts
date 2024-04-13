@@ -19,14 +19,20 @@ export const POST = async(req:Request,res:Response) => {
 
       if (users[email]) {
         // The user already exists
-          return Response.json(users[email], {
+          return Response.json({message:"User already exists"}, {
+            status: 409
+          })
+      } else {
+        // The user doesn't exist, so create a new user
+        const newUser = { email: email, watchlist: [] };
+        users[email] = newUser;
+
+        // Write the updated users object back to the JSON file
+        await fs.promises.writeFile(usersFilePath, JSON.stringify(users, null, 2));
+
+        return Response.json(newUser, {
             status: 200
         })
-      } else {
-        return Response.json({message:"User does not exist"}, {
-            status: 404
-        })
-        
       }
     } else {
         // Handle the case where req.body is null

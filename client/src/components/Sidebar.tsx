@@ -61,7 +61,7 @@ function Sidebar({}: Props) {
         <Link href='/auth/login'>
           <div
             style={
-              pathName == "/auth/login"
+              pathName.includes("/auth")
                 ? { backgroundColor: colors.red, color: "white" }
                 : {
                     backgroundColor: "transparent",

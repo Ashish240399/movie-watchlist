@@ -4,10 +4,10 @@ import React from "react";
 
 type Props = {};
 
-const LoginPage = (props: Props) => {
-  async function login(email: string) {
+const RegisterPage = (props: Props) => {
+  async function register(email: string) {
     console.log(email);
-    const response = await fetch("/api/login", {
+    const response = await fetch("/api/register", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -26,10 +26,10 @@ const LoginPage = (props: Props) => {
   return (
     <div className='pt-[20%]'>
       <div className='w-[40%] m-auto'>
-        <Form actionFn={login} title='Login' pageLink="Register" pageLinkText="Don't have an account? " />
+        <Form actionFn={register} title='Register' pageLink="Login" pageLinkText="Already have an account? " />
       </div>
     </div>
   );
 };
 
-export default LoginPage;
+export default RegisterPage;
