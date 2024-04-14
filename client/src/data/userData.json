@@ -216,42 +216,6 @@
         "Response": "True"
       },
       {
-        "Title": "Captain America",
-        "Year": "1990",
-        "Rated": "PG-13",
-        "Released": "26 Jul 1991",
-        "Runtime": "97 min",
-        "Genre": "Action, Adventure, Sci-Fi",
-        "Director": "Albert Pyun",
-        "Writer": "Joe Simon, Jack Kirby, Stephen Tolkin",
-        "Actors": "Matt Salinger, Ronny Cox, Ned Beatty",
-        "Plot": "Frozen in the ice for decades, Captain America is freed to battle against archcriminal The Red Skull.",
-        "Language": "English",
-        "Country": "United States, Yugoslavia, Croatia",
-        "Awards": "N/A",
-        "Poster": "https://m.media-amazon.com/images/M/MV5BYmRmYzA4NDItZmI3NS00NWIyLWIzZWEtNGIzZjZlYmY5MzE2XkEyXkFqcGdeQXVyMTEyNzgwMDUw._V1_SX300.jpg",
-        "Ratings": [
-          {
-            "Source": "Internet Movie Database",
-            "Value": "3.2/10"
-          },
-          {
-            "Source": "Rotten Tomatoes",
-            "Value": "12%"
-          }
-        ],
-        "Metascore": "N/A",
-        "imdbRating": "3.2",
-        "imdbVotes": "15,089",
-        "imdbID": "tt0103923",
-        "Type": "movie",
-        "DVD": "N/A",
-        "BoxOffice": "N/A",
-        "Production": "N/A",
-        "Website": "N/A",
-        "Response": "True"
-      },
-      {
         "Title": "Avatar",
         "Year": "2009",
         "Rated": "PG-13",
@@ -290,7 +254,63 @@
         "Production": "N/A",
         "Website": "N/A",
         "Response": "True"
+      },
+      {
+        "Title": "Don",
+        "Year": "2006",
+        "Rated": "Not Rated",
+        "Released": "20 Oct 2006",
+        "Runtime": "171 min",
+        "Genre": "Action, Crime, Thriller",
+        "Director": "Farhan Akhtar",
+        "Writer": "Salim Khan, Javed Akhtar, Farhan Akhtar",
+        "Actors": "Shah Rukh Khan, Priyanka Chopra Jonas, Arjun Rampal",
+        "Plot": "Vijay is recruited by a police officer to masquerade as his lookalike Don, the leader of an international gang of smugglers. Things go wrong when the officer is killed and Vijay is left to fend for himself.",
+        "Language": "Hindi",
+        "Country": "India",
+        "Awards": "3 wins & 15 nominations",
+        "Poster": "https://m.media-amazon.com/images/M/MV5BMzAyMWE0MjgtMDVjNS00ZDMyLWE4NjQtNWU2ZDgyYTlmMjdjXkEyXkFqcGdeQXVyNjQ2MjQ5NzM@._V1_SX300.jpg",
+        "Ratings": [
+          {
+            "Source": "Internet Movie Database",
+            "Value": "7.1/10"
+          }
+        ],
+        "Metascore": "N/A",
+        "imdbRating": "7.1",
+        "imdbVotes": "40,829",
+        "imdbID": "tt0461936",
+        "Type": "movie",
+        "DVD": "06 Jun 2016",
+        "BoxOffice": "$2,223,961",
+        "Production": "N/A",
+        "Website": "N/A",
+        "Response": "True"
       }
     ]
+  },
+  "a@gmail.com": {
+    "email": "a@gmail.com",
+    "watchList": []
+  },
+  "ab@gmail.com": {
+    "email": "ab@gmail.com",
+    "watchList": []
+  },
+  "abc@gmail.com": {
+    "email": "abc@gmail.com",
+    "watchList": []
+  },
+  "x@gmail.com": {
+    "email": "x@gmail.com",
+    "watchList": []
+  },
+  "xc@gmail.com": {
+    "email": "xc@gmail.com",
+    "watchList": []
+  },
+  "a": {
+    "email": "a",
+    "watchList": []
   }
 }

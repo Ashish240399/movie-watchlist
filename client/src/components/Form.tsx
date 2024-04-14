@@ -1,4 +1,5 @@
 "use client";
+import { colors } from "@/constants/Color";
 import {
   Button,
   Card,
@@ -42,16 +43,17 @@ const Form = ({ title, actionFn,pageLink,pageLinkText }: Props) => {
             color:"gray",
             textAlign:"end"
           }}>
-            {pageLinkText} <Link href={`${"/auth/"+pageLink.toLowerCase()}`}>{pageLink}</Link>
+            {pageLinkText} <Link style={{color:colors.red}} className="underline" href={`${"/auth/"+pageLink.toLowerCase()}`}>{pageLink}</Link>
           </Typography>
           <Button
             onClick={() => actionFn(email)}
             sx={{
               marginTop: "20px",
             }}
+            disabled={email.length == 0 ? true : false}
             variant='contained'
             size='medium'>
-            Login
+            {title}
           </Button>
         </CardContent>
       </Card>

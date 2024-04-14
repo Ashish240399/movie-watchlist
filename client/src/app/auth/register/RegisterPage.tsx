@@ -1,26 +1,44 @@
 "use client";
+import BasicModal from "@/components/BasicModal";
 import Form from "@/components/Form";
+import { useAppDispatch, useAppSelector } from "@/redux/hook";
+import { setAlert } from "@/redux/slices/alertbarSclice";
+import { setLoader } from "@/redux/slices/loaderSlice";
+import { setModal } from "@/redux/slices/modalSlice";
+import { registerFunction } from "@/services/registerFunction";
+import { useRouter } from "next/navigation";
 import React from "react";
 
 type Props = {};
 
 const RegisterPage = (props: Props) => {
+  const router = useRouter()
+  const loader = useAppSelector(state=>state.loader)
+  const dispatch = useAppDispatch()
+  function goLogin(){
+    router.push("/auth/login")
+    backfromModal()
+  }
+  function backfromModal(){
+    dispatch(setModal({content:"",contentHead:"",actions:[]}))
+  }
   async function register(email: string) {
     console.log(email);
-    const response = await fetch("/api/register", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ email: email }),
-    });
+    dispatch(setLoader({fn:true}))
+    const response = await registerFunction(email);
+    dispatch(setLoader({fn:false}))
 
     if (response.ok) {
       const user = await response.json();
       // Do something with the user
-      console.log(user);
+      dispatch(setModal({content:"You have successfully registered. Please login.",actions:[{ name: 'Login', fn: goLogin },{name:"Back",fn:backfromModal}],contentHead:"Registration Successful"}))
     } else {
-      // Handle error
+      if (response.status===409){
+        dispatch(setModal({content:"User already exists",actions:[{ name: 'Login', fn: goLogin },{name:"Back",fn:backfromModal}],contentHead:"Registration Failed"}))
+      }
+      else if(response.status===400){
+        dispatch(setAlert({type:"error",content:"Bad request"}))
+      }
     }
   }
   return (
@@ -28,6 +46,7 @@ const RegisterPage = (props: Props) => {
       <div className='w-[40%] m-auto'>
         <Form actionFn={register} title='Register' pageLink="Login" pageLinkText="Already have an account? " />
       </div>
+      <BasicModal/>
     </div>
   );
 };

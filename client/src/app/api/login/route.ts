@@ -18,7 +18,6 @@ export const POST = async(req:Request,res:Response) => {
         }
 
       if (users[email]) {
-        // The user already exists
           return Response.json(users[email], {
             status: 200
         })

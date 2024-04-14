@@ -1,7 +1,12 @@
 "use client";
+import Alertbar from "@/components/Alertbar";
 import Form from "@/components/Form";
-import { useAppDispatch } from "@/redux/hook";
+import Loader from "@/components/Loader";
+import { useAppDispatch, useAppSelector } from "@/redux/hook";
+import { setAlert } from "@/redux/slices/alertbarSclice";
+import { setLoader } from "@/redux/slices/loaderSlice";
 import { setUser } from "@/redux/slices/userSlice";
+import { loginFunction } from "@/services/loginFunction";
 import { useRouter } from "next/navigation";
 import React from "react";
 
@@ -9,16 +14,15 @@ type Props = {};
 
 const LoginPage = (props: Props) => {
   const dispatch = useAppDispatch()
+  const loader = useAppSelector(state=>state.loader)
+  const alert = useAppSelector(state=>state.alert)
   const router = useRouter()
   async function login(email: string) {
     console.log(email);
-    const response = await fetch("/api/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ email: email }),
-    });
+    dispatch(setLoader({fn:true}))
+    const response = await loginFunction(email);
+
+    dispatch(setLoader({fn:false}))
 
     if (response.ok) {
       const user = await response.json();
@@ -28,7 +32,9 @@ const LoginPage = (props: Props) => {
       router.push('/home')
     } else {
       // Handle error
-      console.log(response.status)
+      if (response.status === 404) {
+        dispatch(setAlert({content:"User not found",type:"error"}))
+      }
     }
   }
   return (
@@ -36,6 +42,8 @@ const LoginPage = (props: Props) => {
       <div className='w-[40%] m-auto'>
         <Form actionFn={login} title='Login' pageLink="Register" pageLinkText="Don't have an account? " />
       </div>
+      {alert.content.length>0 && <Alertbar/>}
+      {loader.fn && <Loader/>}
     </div>
   );
 };

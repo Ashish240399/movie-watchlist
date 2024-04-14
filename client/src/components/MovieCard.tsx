@@ -5,8 +5,9 @@ import React from 'react'
 import TurnedInNotIcon from '@mui/icons-material/TurnedInNot';
 import TurnedInIcon from '@mui/icons-material/TurnedIn';
 import { addOrRemoveMoviesFromWatchList } from '@/services/addOrRemoveMoviesFromWatchList';
-import { useAppDispatch } from '@/redux/hook';
+import { useAppDispatch, useAppSelector } from '@/redux/hook';
 import { setUser } from '@/redux/slices/userSlice';
+import { setAlert } from '@/redux/slices/alertbarSclice';
 
 
 
@@ -16,8 +17,9 @@ type Props = {
 };
 
 const MovieCard = ({movie,user}: Props) => {
-    const dispatch = useAppDispatch()
-    console.log(user)
+    const dispatch:any = useAppDispatch()
+    const alertbar = useAppSelector(state=>state.alert)
+    console.log(alertbar)
     return (
         <div>
             <Card>
@@ -34,8 +36,13 @@ const MovieCard = ({movie,user}: Props) => {
                     </div>
                     <div>
                         <h2 className='text-[25px] font-bold flex justify-between items-center'>{movie.Title} <span className='cursor-pointer' onClick={async()=>{
-                            const res = await addOrRemoveMoviesFromWatchList(user.email,movie)
-                            dispatch(setUser(res))
+                            if(user.email.length==0){
+                                dispatch(setAlert({content:"Please login to add movies to the watchlist",type:"error"}))
+                            }
+                            else{
+                                const res = await addOrRemoveMoviesFromWatchList(user.email,movie)
+                                dispatch(setUser(res))
+                            }
                         }}>{user.watchList.some((obj:Movie)=>obj.Title==movie.Title)?<TurnedInIcon fontSize='large'/>:<TurnedInNotIcon fontSize='large' />}</span></h2>
                         <p><span className='text-[20px] font-bold'>Released on - </span>{movie.Released}</p>
                         <p><span className='text-[20px] font-bold'>Genre - </span>{movie.Genre}</p>

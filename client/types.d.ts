@@ -25,3 +25,14 @@ type Movie = {
     Website: string;
     Response: string;
 };
+
+type Alert={
+    type:"success"|"error"|"info"|"warning",
+    content:string
+}
+
+type Modal = {
+    content: string;
+    contentHead:string;
+    actions: Array<{ name: string; fn: Function }>;
+};
