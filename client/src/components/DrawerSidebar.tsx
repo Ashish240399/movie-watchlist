@@ -1,25 +1,40 @@
-"use client";
-import { colors } from "@/constants/Color";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
-import React from "react";
-import { IoHomeSharp } from "react-icons/io5";
-import { BsClockFill } from "react-icons/bs";
-import { FaUserCircle } from "react-icons/fa";
-import { useAppDispatch, useAppSelector } from "@/redux/hook";
-import { Avatar } from "@mui/material";
-import { deepOrange, red } from "@mui/material/colors";
-import { clearUser } from "@/redux/slices/userSlice";
+"use client"
+import * as React from 'react';
+import Box from '@mui/material/Box';
+import Drawer from '@mui/material/Drawer';
+import Button from '@mui/material/Button';
+import List from '@mui/material/List';
+import Divider from '@mui/material/Divider';
+import ListItem from '@mui/material/ListItem';
+import ListItemButton from '@mui/material/ListItemButton';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
+import InboxIcon from '@mui/icons-material/MoveToInbox';
+import MailIcon from '@mui/icons-material/Mail';
+import { colors } from '@/constants/Color';
+import MenuIcon from '@mui/icons-material/Menu';
+import { FaUserCircle } from 'react-icons/fa';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import { IoHomeSharp } from 'react-icons/io5';
+import { BsClockFill } from 'react-icons/bs';
+import { clearUser } from '@/redux/slices/userSlice';
+import { Avatar } from '@mui/material';
+import { red } from '@mui/material/colors';
+import { useAppDispatch, useAppSelector } from '@/redux/hook';
 
-type Props = {};
+export default function DrawerSidebar() {
+    const pathName = usePathname()
+    const dispatch = useAppDispatch()
+    const user = useAppSelector((state)=>state.user)
+  const [open, setOpen] = React.useState(false);
 
-function Sidebar({}: Props) {
-  const user = useAppSelector((state)=>state.user)
-  const dispatch = useAppDispatch()
-  const pathName = usePathname();
-  console.log(user)
-  return (
-    <div className='px-[4%] md:px-[6%] lg:px-[10%] xl:px-[14%] py-6 flex justify-between flex-col h-[100%]'>
+  const toggleDrawer = (newOpen: boolean) => () => {
+    setOpen(newOpen);
+  };
+
+  const DrawerList = (
+    <div className='px-[4%] md:px-[6%] lg:px-[10%] xl:px-[14%] py-6 flex justify-between flex-col h-[100%] w-[60vw]'>
       <div>
         <div style={{ color: colors.red }} className={"font-bold text-[30px]"}>
           Watchlists
@@ -102,6 +117,21 @@ function Sidebar({}: Props) {
       </div>
     </div>
   );
-}
 
-export default Sidebar;
+  return (
+    <div>
+        <div style={{ color: colors.red }} className={"font-bold text-[20px] flex items-center gap-0"}>
+            <Button onClick={toggleDrawer(true)}>
+                <MenuIcon />
+            </Button>
+
+            Watchlists
+            
+        </div>
+      
+      <Drawer open={open} onClose={toggleDrawer(false)}>
+        {DrawerList}
+      </Drawer>
+    </div>
+  );
+}

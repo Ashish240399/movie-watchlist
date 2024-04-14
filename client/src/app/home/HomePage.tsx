@@ -44,7 +44,7 @@ const HomePage = (props: Props) => {
       <div style={{
         border:`1px solid ${colors.red}`,
       }} className='mb-[4%] rounded-md p-4'>
-        <p className='text-[40px]'>Welcome to <span style={{color:colors.red}}>Watchlists</span></p>
+        <p className='text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold'>Welcome to <span style={{color:colors.red}}>Watchlists</span></p>
         <p className='mt-[3%]'>Search movies, add them to your watchlist</p>
         <p className='mt-[1%]'>By clicking on <TurnedInNotIcon/>, the movie will be added to your watchlist</p>
       </div>
@@ -55,7 +55,7 @@ const HomePage = (props: Props) => {
         }} onClick={getMovieByTitleFn} variant='contained'>Search</Button>
       </div>
         
-        <div className='mt-5'>
+        <div className='mt-[3%]'>
           {movieList && <MovieCard movie={movieList} user={user} />}
           {movieNotFound && <div className='text-[30px] text-center'>Movie Not Found</div>}
         </div>

@@ -21,6 +21,14 @@ export default function Alertbar() {
     dispatch(clearAlert());
   };
 
+  React.useEffect(()=>{
+    if(alertbar.content.length>0){
+      setTimeout(()=>{
+        dispatch(clearAlert());
+      },5000)
+    }
+  },[alertbar.content,dispatch])
+
   return (
     <div>
       <Snackbar anchorOrigin={{horizontal,vertical}} open={alertbar.content==""?false:true} autoHideDuration={6000} onClose={handleClose}>

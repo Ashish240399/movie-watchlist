@@ -6,6 +6,7 @@ import { AppRouterCacheProvider } from "@mui/material-nextjs/v13-appRouter";
 import { ThemeProvider } from "@mui/material/styles";
 import theme from "@/theme";
 import { Providers } from "@/redux/provider";
+import DrawerSidebar from "@/components/DrawerSidebar";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -26,10 +27,16 @@ export default function RootLayout({
           <AppRouterCacheProvider>
             <ThemeProvider theme={theme}>
               <div className='w-[100vw] h-[100vh] overflow-hidden flex bg-[#ffffff] text-[#00000085]'>
-                <div className='w-[23%] border-r-2 border-r-[#8080809a]'>
+                <div className='w-[0%] invisible md:visible md:w-[23%] border-r-2 border-r-[#8080809a]'>
                   <Sidebar />
                 </div>
-                <div className='w-[77%] px-[8%] py-6 overflow-auto'>{children}</div>
+                <div className='w-[100%] md:w-[77%] px-[2%] md:px-[4%] lg:px-[6%] xl:px-[8%] py-6 overflow-auto'>
+                  <div className="mb-[4%] flex md:hidden fixed top-0 left-0 w-full shadow-md py-2"><DrawerSidebar/></div>
+                  <div className="mt-[40px] md:mt-0">
+                    {children}
+                  </div>
+                  
+                </div>
               </div>
             </ThemeProvider>
           </AppRouterCacheProvider>

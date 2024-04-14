@@ -42,8 +42,8 @@ const RegisterPage = (props: Props) => {
     }
   }
   return (
-    <div className='pt-[20%]'>
-      <div className='w-[40%] m-auto'>
+    <div className='h-[95vh] flex items-center justify-center'>
+      <div className='w-[90%] md:w-[80%] lg:w-[60%] xl:w-[40%] m-auto'>
         <Form actionFn={register} title='Register' pageLink="Login" pageLinkText="Already have an account? " />
       </div>
       <BasicModal/>

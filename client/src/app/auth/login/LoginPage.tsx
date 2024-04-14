@@ -38,8 +38,8 @@ const LoginPage = (props: Props) => {
     }
   }
   return (
-    <div className='pt-[20%]'>
-      <div className='w-[40%] m-auto'>
+    <div className='h-[95vh] flex items-center justify-center'>
+      <div className='w-[90%] md:w-[80%] lg:w-[60%] xl:w-[40%] m-auto'>
         <Form actionFn={login} title='Login' pageLink="Register" pageLinkText="Don't have an account? " />
       </div>
       {alert.content.length>0 && <Alertbar/>}
