@@ -25,7 +25,7 @@ const HomePage = (props: Props) => {
 
     // Using useState hook to manage local state
     const [movieTitle, setMovieTitle] = useState<string>("");
-    const [movieList,setMovieList] = useState<Movie | null>(null)
+    const [watchList,setMovieList] = useState<Movie | null>(null)
     const [movieNotFound,setMovieNotFound] = useState<boolean>(false)
 
     // Function to get movie by title
@@ -42,12 +42,12 @@ const HomePage = (props: Props) => {
 
       // Checking the response
       if (response.Response=="False"){
-        // If movie not found, set movieNotFound to true and movieList to null
+        // If movie not found, set movieNotFound to true and watchList to null
         setMovieNotFound(true)
         setMovieList(null)
       }
       else if(response.Response == "True"){
-        // If movie found, set movieNotFound to false and movieList to the movie data
+        // If movie found, set movieNotFound to false and watchList to the movie data
         setMovieNotFound(false)
         setMovieList(response)
       }
@@ -75,7 +75,7 @@ const HomePage = (props: Props) => {
       </div>
         
         <div className='mt-[3%]'>
-          {movieList && <MovieCard movie={movieList} user={user} />}
+          {watchList && <MovieCard movie={watchList} user={user} />}
           {movieNotFound && <div className='text-[30px] text-center'>Movie Not Found</div>}
         </div>
         {alert.content.length>0 && <Alertbar/>}

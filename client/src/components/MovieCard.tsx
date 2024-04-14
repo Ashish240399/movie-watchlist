@@ -21,6 +21,7 @@ const MovieCard = ({ movie, user }: Props) => {
     // Using hooks to dispatch actions and select state from the Redux store
     const dispatch: any = useAppDispatch()
     const alertbar = useAppSelector(state => state.alert)
+    console.log(user)
 
     // Rendering the component
     return (
@@ -43,6 +44,7 @@ const MovieCard = ({ movie, user }: Props) => {
                                     // If yes, call the function to add or remove the movie from the watchlist
                                     const res = await addOrRemoveMoviesFromWatchList(user.email, movie)
                                     // Then dispatch an action to set the user
+                                    // console.log(res)
                                     dispatch(setUser(res))
                                 }
                             }}>

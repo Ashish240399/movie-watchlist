@@ -11,6 +11,7 @@ const WatchListPage = (props: Props) => {
   const user = useAppSelector((state) => state.user);
 
   // Rendering the component
+  console.log(user)
   return (
     <div className="container mx-auto px-4">
       <div className='mb-6'>

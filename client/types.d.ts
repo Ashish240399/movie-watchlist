@@ -36,3 +36,8 @@ type Modal = {
     contentHead:string;
     actions: Array<{ name: string; fn: Function }>;
 };
+
+type User = {
+    email:string;
+    watchList:Movie[]
+}

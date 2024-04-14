@@ -1,48 +1,37 @@
-import path from "path";
-import fs from 'fs';
 
-// Define the POST handler
+import { addMovieToWatchList, removeMovieFromWatchList } from "@/redux/slices/usersDataSlice";
+import { store } from "@/redux/store";
+
+// Define the POST handler for the route
 export const POST = async(req:Request,res:Response) => {
+  const userData = store.getState().userData
     // Parse the request body
     const body: any = await req.json();
     // Extract email and movie from the request body
     const email = body.email;
-    const movie:Movie = body.movie
+    const movie:Movie = body.movie;
 
     // Check if email is provided
     if (email) {
-      // Define the path to the users data file
-      const usersFilePath = path.resolve(process.cwd(), "./src/data/userData.json");
-
-      // Read the users data file
-      const usersFileContent = await fs.promises.readFile(usersFilePath, 'utf-8');
-      let users;
-      // Try to parse the users data file content
-      try {
-        users = JSON.parse(usersFileContent);
-      } catch (error) {
-        // Log an error message if the parsing fails
-        console.error('Error parsing JSON:', error);
-        // Initialize users as an empty object
-        users = {};
-      }
+      // Find the user in the userData array
+      console.log(userData,"from addOrRemoveFromWatchlist");
+      console.log(email);
+      const user = userData.find(user => user.email === email);
 
       // Check if the user exists
-      if (users[email]) {
+      if (user) {
         // The user already exists
-        // Check if the movie is already in the user's watchlist
-        if (users[email].watchList.some((obj:Movie)=>obj.Title===movie.Title)) {
-            // If the movie is in the watchlist, remove it
-            users[email].watchList = users[email].watchList.filter((obj:Movie)=>obj.Title!==movie.Title)
+        // Check if the movie is already in the user's watchList
+        if (user.watchList.some((obj:Movie)=>obj.Title===movie.Title)) {
+            // If the movie is in the watchList, remove it
+            store.dispatch(removeMovieFromWatchList({email:email,movie:movie}))
         }
         else{
-            // If the movie is not in the watchlist, add it
-            users[email].watchList.push(body.movie)
+            // If the movie is not in the watchList, add it
+            store.dispatch(addMovieToWatchList({email:email,movie:movie}))
         }
-        // Write the updated users data back to the file
-        await fs.promises.writeFile(usersFilePath, JSON.stringify(users, null, 2));
         // Return the updated user data
-        return Response.json(users[email], {
+        return Response.json(user, {
             status: 200
         })
       } else {

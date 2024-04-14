@@ -1,36 +1,25 @@
-import path from "path";
-import fs from 'fs';
+
+import { store } from "@/redux/store";
+
 
 // Define the POST handler for the route
 export const POST = async(req:Request,res:Response) => {
+  const userData = store.getState().userData
     // Parse the request body
     const body: any = await req.json();
     // Extract the email from the request body
     const email = body.email;
+    console.log(userData,"from login")
 
     // Check if email is provided
     if (email) {
-      // Define the path to the users data file
-      const usersFilePath = path.resolve(process.cwd(), "./src/data/userData.json");
-
-      // Read the users data file
-      const usersFileContent = await fs.promises.readFile(usersFilePath, 'utf-8');
-      let users;
-
-      // Try to parse the users data file content
-      try {
-        users = JSON.parse(usersFileContent);
-      } catch (error) {
-        // Log an error message if the parsing fails
-        console.error('Error parsing JSON:', error);
-        // Initialize users as an empty object
-        users = {};
-      }
+      // Find the user in the userData array
+      const user = userData.find(user => user.email === email);
 
       // Check if the user exists
-      if (users[email]) {
+      if (user) {
         // If the user exists, return the user data
-        return Response.json(users[email], {
+        return Response.json(user, {
           status: 200
         })
       } else {
