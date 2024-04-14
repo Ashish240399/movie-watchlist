@@ -1,40 +1,47 @@
-"use client"
-import WatchListCard from '@/components/WatchListCard'
-import { colors } from '@/constants/Color'
-import { useAppSelector } from '@/redux/hook'
-import Link from 'next/link'
-import React, { useEffect, useState } from 'react'
+"use client";
+import WatchListCard from "@/components/WatchListCard";
+import { colors } from "@/constants/Color";
+import { useAppDispatch, useAppSelector } from "@/redux/hook";
+import { setUser } from "@/redux/slices/userSlice";
+import Link from "next/link";
+import React, { useEffect, useState } from "react";
 
-type Props = {}
+type Props = {};
 
 const WatchListPage = (props: Props) => {
+  const dispatch = useAppDispatch();
   const user = useAppSelector((state) => state.user);
+  const userData = useAppSelector((state) => state.userData);
 
   // Rendering the component
-  console.log(user)
+  useEffect(() => {
+    console.log("calling useEffect");
+    const updatedUser = userData.find((el) => el.email == user.email);
+    dispatch(setUser(updatedUser || { email: "", watchList: [] }));
+  }, [userData]);
   return (
     <div className="container mx-auto px-4">
-      <div className='mb-6'>
-        <p className='text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold'>
+      <div className="mb-6">
+        <p className="text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold">
           Your <span style={{ color: colors.red }}>Watchlists</span>
         </p>
       </div>
       {user.email.length === 0 && (
-        <p className='mt-8 sm:mt-12 md:mt-16 lg:mt-20 xl:mt-24 text-center text-lg md:text-xl lg:text-2xl xl:text-3xl'>
-          Please{' '}
-          <span style={{ color: colors.red }} className='underline'>
+        <p className="mt-8 sm:mt-12 md:mt-16 lg:mt-20 xl:mt-24 text-center text-lg md:text-xl lg:text-2xl xl:text-3xl">
+          Please{" "}
+          <span style={{ color: colors.red }} className="underline">
             <Link href="/auth/login">login</Link>
-          </span>{' '}
+          </span>{" "}
           to add movies to the watchlists
         </p>
       )}
       {user.watchList.length === 0 && user.email.length > 0 && (
-        <p className='mt-8 sm:mt-12 md:mt-16 lg:mt-20 xl:mt-24 text-center text-lg md:text-xl lg:text-2xl xl:text-3xl'>
+        <p className="mt-8 sm:mt-12 md:mt-16 lg:mt-20 xl:mt-24 text-center text-lg md:text-xl lg:text-2xl xl:text-3xl">
           No movies in the watchlist. Search for movies and add them to the
           watchlist
         </p>
       )}
-      <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4'>
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
         {user.watchList.map((movie: Movie, id: number) => (
           <div key={id}>
             <WatchListCard movie={movie} />
