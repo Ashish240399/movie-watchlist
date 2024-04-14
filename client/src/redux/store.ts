@@ -6,8 +6,6 @@ import {
 } from 'react-redux';
 import rootReducer from './rootReducer';
 
-// ----------------------------------------------------------------------
-
 // Define the root state type using the ReturnType utility of TypeScript
 export type RootState = ReturnType<typeof rootReducer>;
 

@@ -1,4 +1,6 @@
 "use client"
+
+// Importing required components, hooks, and slices
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -7,6 +9,7 @@ import Modal from '@mui/material/Modal';
 import { useAppDispatch, useAppSelector } from '@/redux/hook';
 import { clearModal } from '@/redux/slices/modalSlice';
 
+// Defining the style for the modal
 const style = {
   position: 'absolute' as 'absolute',
   top: '50%',
@@ -20,15 +23,21 @@ const style = {
 };
 
 export default function BasicModal() {
+  // Using hooks to dispatch actions and select state from the Redux store
   const modal = useAppSelector((state)=>state.modal);
   const dispatch = useAppDispatch();
+
+  // Function to handle Modal close
   const handleClose = () => {
+    // Dispatching action to clear modal
     dispatch(clearModal())
   }
 
+  // Rendering the component
   return (
     <div>
       <Modal
+        // Open the modal if there is content in the modal state
         open={modal.content.length>0?true:false}
         onClose={handleClose}
         aria-labelledby="modal-modal-title"
@@ -42,6 +51,7 @@ export default function BasicModal() {
             {modal.content}
           </Typography>
           <div className='mt-5'>
+            {/* Mapping through the actions in the modal state and creating a button for each action */}
             {modal.actions.map((el) => (
                 <Button sx={{
                     marginRight:"10px"

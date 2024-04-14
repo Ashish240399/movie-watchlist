@@ -1,4 +1,6 @@
 "use client"
+
+// Importing required components, hooks, services, and constants
 import MovieCard from '@/components/MovieCard'
 import SearchBar from '@/components/SearchBar'
 import { colors } from '@/constants/Color'
@@ -15,30 +17,47 @@ import { setAlert } from '@/redux/slices/alertbarSclice'
 type Props = {}
 
 const HomePage = (props: Props) => {
+    // Using hooks to dispatch actions and select state from the Redux store
     const user = useAppSelector((state)=>state.user)
     const alert = useAppSelector((state)=>state.alert)
     const loader = useAppSelector((state)=>state.loader)
     const dispatch = useAppDispatch()
+
+    // Using useState hook to manage local state
     const [movieTitle, setMovieTitle] = useState<string>("");
     const [movieList,setMovieList] = useState<Movie | null>(null)
     const [movieNotFound,setMovieNotFound] = useState<boolean>(false)
+
+    // Function to get movie by title
     async function getMovieByTitleFn(){
+      // Dispatching action to show loader
       dispatch(setLoader({fn:true}))
-        const response = await getMoviewByTitle(movieTitle);
-        console.log(response);
-        dispatch(setLoader({fn:false}))
-        if (response.Response=="False"){
-          setMovieNotFound(true)
-          setMovieList(null)
-        }
-        else if(response.Response == "True"){
-          setMovieNotFound(false)
-          setMovieList(response)
-        }
-        else{
-          dispatch(setAlert({content:"Server Error! Please try agin later",type:"error"}))
-        }
+
+      // Calling getMoviewByTitle service
+      const response = await getMoviewByTitle(movieTitle);
+      console.log(response);
+
+      // Dispatching action to hide loader
+      dispatch(setLoader({fn:false}))
+
+      // Checking the response
+      if (response.Response=="False"){
+        // If movie not found, set movieNotFound to true and movieList to null
+        setMovieNotFound(true)
+        setMovieList(null)
+      }
+      else if(response.Response == "True"){
+        // If movie found, set movieNotFound to false and movieList to the movie data
+        setMovieNotFound(false)
+        setMovieList(response)
+      }
+      else{
+        // If server error, dispatch action to show alert with error message
+        dispatch(setAlert({content:"Server Error! Please try agin later",type:"error"}))
+      }
     }
+
+  // Rendering the component
   return (
     <div>
       <div style={{

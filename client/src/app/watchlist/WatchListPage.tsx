@@ -10,6 +10,7 @@ type Props = {}
 const WatchListPage = (props: Props) => {
   const user = useAppSelector((state) => state.user);
 
+  // Rendering the component
   return (
     <div className="container mx-auto px-4">
       <div className='mb-6'>

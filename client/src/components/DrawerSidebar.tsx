@@ -1,16 +1,7 @@
 "use client"
 import * as React from 'react';
-import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
 import Button from '@mui/material/Button';
-import List from '@mui/material/List';
-import Divider from '@mui/material/Divider';
-import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
-import MailIcon from '@mui/icons-material/Mail';
 import { colors } from '@/constants/Color';
 import MenuIcon from '@mui/icons-material/Menu';
 import { FaUserCircle } from 'react-icons/fa';
@@ -24,15 +15,20 @@ import { red } from '@mui/material/colors';
 import { useAppDispatch, useAppSelector } from '@/redux/hook';
 
 export default function DrawerSidebar() {
-    const pathName = usePathname()
-    const dispatch = useAppDispatch()
-    const user = useAppSelector((state)=>state.user)
+   // Using hooks to dispatch actions and select state from the Redux store
+  const pathName = usePathname()
+  const dispatch = useAppDispatch()
+  const user = useAppSelector((state)=>state.user)
+
+  // State for controlling the open/close state of the drawer
   const [open, setOpen] = React.useState(false);
 
+  // Function to toggle the state of the drawer
   const toggleDrawer = (newOpen: boolean) => () => {
     setOpen(newOpen);
   };
 
+  // JSX for the list of items in the drawer
   const DrawerList = (
     <div className='px-[4%] md:px-[6%] lg:px-[10%] xl:px-[14%] py-6 flex justify-between flex-col h-[100%] w-[60vw]'>
       <div>
@@ -120,14 +116,12 @@ export default function DrawerSidebar() {
 
   return (
     <div>
-        <div style={{ color: colors.red }} className={"font-bold text-[20px] flex items-center gap-0"}>
-            <Button onClick={toggleDrawer(true)}>
-                <MenuIcon />
-            </Button>
-
-            Watchlists
-            
-        </div>
+      <div style={{ color: colors.red }} className={"font-bold text-[20px] flex items-center gap-0"}>
+          <Button onClick={toggleDrawer(true)}>
+              <MenuIcon />
+          </Button>
+          Watchlists
+      </div>
       
       <Drawer open={open} onClose={toggleDrawer(false)}>
         {DrawerList}
